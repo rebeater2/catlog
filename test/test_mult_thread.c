@@ -7,7 +7,7 @@
 **/
 
 
-#include "src/catlog.h"
+#include "../src/catlog.h"
 #include <pthread.h>
 #include <unistd.h>
 

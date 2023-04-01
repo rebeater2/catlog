@@ -1,17 +1,18 @@
 
-#include "src/catlog.h"
+#include "../src/catlog.h"
+#include <stdlib.h>
 #include <time.h>
 #include <stdio.h>
 
-void catlog_write_to_stderr(uint8_t * buffer,uint32_t size) {
+/*void catlog_write_to_stderr(uint8_t * buffer,uint32_t size) {
     fprintf(stderr,"%s", buffer);
-}
+}*/
 
 int main() {
 
     catlog_init(NULL);
     LOG_INFO("<---------------------  time used  ---------------------------->");
-#if 0
+#if 1
     clock_t start,stop;
     start = clock();
     for(int i = 0; i < 10000; ++i){
@@ -19,7 +20,7 @@ int main() {
     }
     stop = clock();
     LOG_INFO("MAX push out cnts %d",catlog_push_out_cnts);
-    LOG_INFO("time used %d ms",(stop-start));
+    LOG_INFO("time used %d ms",(int)(1e3f * (stop-start)/CLOCKS_PER_SEC));
 #endif
     LOG_INFO("<---------------------  base function test  ---------------------------->");
     LOG_INFO("this is INFO message: %d", 1);
@@ -28,7 +29,7 @@ int main() {
     LOG_ERROR("this is ERROR message: 0x%x", 0xff);
     LOG_FETAL("this is FETAL message: %d %d", 2, 4);
 
-    for (int i = 0; i <= 20; i++) {
+    for (int i = 0; i <= 2000; i++) {
         LOG_INFO_EVERY(5, "this will log info every 5 times(current i = %d)", i);
         LOG_DEBUG_FIRST(3, "this will log debug only the first 3 times(current i = %d)", i);
     }
@@ -37,5 +38,7 @@ int main() {
 
 
     catlog_deinit(NULL);
+    printf("%d\n",catlog_push_out_cnts);
+
     return 0;
 }
