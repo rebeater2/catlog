@@ -11,8 +11,9 @@
 
 #include "catlog.h"
 
+uint32_t catlog_get_sys_time_str(char *buffer);
 
-void catlog_open_stderr(void *) ;
+void catlog_open_stderr(void *);
 void catlog_close_stderr(void *);
 void catlog_open_file(void *);
 void catlog_close_file(void *);
