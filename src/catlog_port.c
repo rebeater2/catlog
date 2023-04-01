@@ -9,21 +9,31 @@
 
 #include "catlog_port.h"
 #include <stdio.h>
+#ifdef __MINGW32__
+#define CATLOG_WEAK_DECLARE
+#endif
+#ifdef __GNUC__
+#define CATLOG_WEAK_DECLARE __attribute__((weak))
+#endif
 
-void catlog_open_stderr(void *p){}
-void catlog_close_stderr(void *p){};
-void catlog_write_to_stderr(uint8_t * buffer,uint32_t size){
+#ifndef CATLOG_WEAK_DECLARE
+#define CATLOG_WEAK_DECLARE
+#endif
+
+CATLOG_WEAK_DECLARE void  catlog_open_stderr(void *p){} ;
+CATLOG_WEAK_DECLARE void catlog_close_stderr(void *p){} ;
+CATLOG_WEAK_DECLARE void catlog_write_to_stderr(uint8_t * buffer,uint32_t size) {
     fprintf(stderr,"%s", buffer);
 }
 
 
-void catlog_open_device(void *p){
+CATLOG_WEAK_DECLARE void catlog_open_device(void *p){
     /*TODO*/
 }
-void catlog_close_device(void *p){
+CATLOG_WEAK_DECLARE void catlog_close_device(void *p){
     /*TODO*/
 }
-void catlog_write_to_device(uint8_t *buffer,uint32_t size){
+CATLOG_WEAK_DECLARE void catlog_write_to_device(uint8_t *buffer,uint32_t size){
     /*TODO*/
 }
 

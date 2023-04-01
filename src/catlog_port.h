@@ -12,7 +12,7 @@
 #include "catlog.h"
 
 
-void catlog_open_stderr(void *);
+void catlog_open_stderr(void *) ;
 void catlog_close_stderr(void *);
 void catlog_open_file(void *);
 void catlog_close_file(void *);

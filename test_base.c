@@ -1,7 +1,11 @@
 
 #include "src/catlog.h"
 #include <time.h>
+#include <stdio.h>
 
+void catlog_write_to_stderr(uint8_t * buffer,uint32_t size) {
+    fprintf(stderr,"%s", buffer);
+}
 
 int main() {
 
