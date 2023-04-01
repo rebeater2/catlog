@@ -43,20 +43,30 @@ void catlog_push_out() {
 #elif CATLOG_OUTPUT_MODE == CATLOG_OUTPUT_TO_DEVICE
     catlog_write_to_device(catlog_buffer,catlog_offset);
 #endif
-    memset(catlog_buffer, 0, CATLOG_BUFFER_SIZE);
+    catlog_buffer[0] = '\0';
     catlog_offset = 0;
     catlog_push_out_cnts++;
 }
 
 void catlog_init(catlog_config_t *config) {
 #if CATLOG_PUSHOUT_LEVEL != CATLOG_DISABLE
-
     catlog_buffer = malloc(sizeof(char) * CATLOG_BUFFER_SIZE);
     catlog_offset = 0;
 #if CATLOG_OUTPUT_MODE == CATLOG_OUTPUT_TO_STDERR
     catlog_open_stderr(NULL);
 #elif  CATLOG_OUTPUT_MODE == CATLOG_OUTPUT_TO_FILE
-    catlog_open_file("log.txt");
+    const char filename[25];
+    time_t cur = time(NULL);
+    struct tm *t = localtime(&cur);
+    sprintf(filename,"%04d%02d%02d_%02d%02d%02d.log",
+            1900 + t->tm_year,
+            t->tm_mon,
+            t->tm_mday,
+            t->tm_hour,
+            t->tm_min,
+            t->tm_sec
+            );
+    catlog_open_file(filename);
 #elif CATLOG_OUTPUT_MODE == CATLOG_OUTPUT_TO_DEVICE
     catlog_open_device(NULL);
 #endif
@@ -80,17 +90,8 @@ catlog_offset += retval;           \
 }
 
 static uint32_t add_time_stamp() {
-    time_t cur = time(NULL);
-    struct tm *t = localtime(&cur);
-    uint8_t res = sprintf((char *) catlog_buffer + catlog_offset,
-                          "%04d/%02d/%02d %02d:%02d:%02d ",
-                          1900 + t->tm_year,
-                          t->tm_mon,
-                          t->tm_mday,
-                          t->tm_hour,
-                          t->tm_min,
-                          t->tm_sec);
-    catlog_offset += res;
+   uint32_t res = catlog_get_sys_time_str(catlog_buffer + catlog_offset);
+   catlog_offset += res;
     return 0;
 }
 
@@ -169,7 +170,6 @@ void log_impl(catlog_level_t level, const char *func_name, const char *fmt, ...)
     add_endline();
 #if CATLOG_CACHED_SUPPORT == 1
     if (catlog_offset > CATLOG_BUFFER_SIZE / 2) {
-        catlog_buffer[catlog_offset++] = '\0';
         catlog_push_out();
     }
 #else
