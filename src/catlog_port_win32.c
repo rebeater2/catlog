@@ -1,3 +1,6 @@
+//
+// Created by linfe on 2023/4/2.
+//
 /**
 * @file catlog_port.c in catlog
 * @author linfe
@@ -8,13 +11,7 @@
 
 #include "catlog_port.h"
 #include <stdio.h>
-#ifdef __linux__
-#include <sys/time.h>
-#include <time.h>
-#endif
-#ifdef WIN32
 #include <Windows.h>
-#endif
 
 #ifdef __MINGW32__
 /*mingw 貌似不支持弱函数*/
@@ -29,22 +26,6 @@
 
 CATLOG_WEAK_DECLARE uint32_t catlog_get_sys_time_str(char *buffer){
     uint32_t res = 0;
-#ifdef __linux__
-    time_t cur = time(NULL);
-    struct tm *t = localtime(&cur);
-    struct timeval tv;
-    gettimeofday(&tv,NULL);
-    res = sprintf((char *) buffer,
-                          "%04d/%02d/%02d %02d:%02d:%02d.%03lu ",
-                          1900 + t->tm_year,
-                          t->tm_mon,
-                          t->tm_mday,
-                          t->tm_hour,
-                          t->tm_min,
-                          t->tm_sec,
-                          tv.tv_usec/1000);
-#endif
-#ifdef WIN32
     SYSTEMTIME t1;
     GetSystemTime(&t1);
     res = sprintf((char *) buffer,
@@ -56,10 +37,6 @@ CATLOG_WEAK_DECLARE uint32_t catlog_get_sys_time_str(char *buffer){
                           t1.wMinute,
                           t1.wSecond,
                           t1.wMilliseconds);
-#endif
-#ifdef FREERTOS
-    /* TODO!: add function to  get timestamp in char for RTOS, which can be implemented in user code */
-#endif
     return res;
 }
 

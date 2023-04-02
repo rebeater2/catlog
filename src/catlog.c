@@ -169,7 +169,7 @@ void log_impl(catlog_level_t level, const char *func_name, const char *fmt, ...)
 #endif
     add_endline();
 #if CATLOG_CACHED_SUPPORT == 1
-    if (catlog_offset > CATLOG_BUFFER_SIZE / 2) {
+    if (CATLOG_BUFFER_SIZE - catlog_offset < CATLOG_MAX_CHARS_ONE_LINE) {
         catlog_push_out();
     }
 #else

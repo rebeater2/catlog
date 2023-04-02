@@ -36,16 +36,23 @@
 
 
 /**
-CATLOG_OUTPUT_TO_STDERR  0
-CATLOG_OUTPUT_TO_FILE  1
-CATLOG_OUTPUT_TO_DEVICE  2
- *
- *
+CATLOG_OUTPUT_TO_STDERR: output to stderr
+CATLOG_OUTPUT_TO_FILE: output to file
+CATLOG_OUTPUT_TO_DEVICE: output to device,such as /dev/ttyUSB0 on linux
  * */
 #define CATLOG_OUTPUT_MODE  CATLOG_OUTPUT_TO_STDERR
 
+/*
+ * buffer size for cached log, valid when CATLOG_CACHED_SUPPORT = 1
+ * Unit: byte
+ * */
+#define CATLOG_BUFFER_SIZE (1024*1024*2)
 
-#define CATLOG_BUFFER_SIZE 255
+
+/**
+ * maxmium of characters in one line, must be smaller than CATLOG_BUFFER_SIZE
+ */
+#define CATLOG_MAX_CHARS_ONE_LINE  255
 
 
 #endif //CATLOG_SRC_CATLOG_CONF_H_
