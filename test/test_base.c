@@ -1,16 +1,18 @@
 
 #include "../src/catlog.h"
-#include <stdlib.h>
+
 #include <time.h>
 #include <stdio.h>
 
-/*void catlog_write_to_stderr(uint8_t * buffer,uint32_t size) {
+/*
+ * #include <stdio.h>
+void catlog_write_to_stderr(uint8_t * buffer,uint32_t size) {
     fprintf(stderr,"%s", buffer);
 }*/
 
 int main() {
 
-    catlog_init(NULL);
+    catlog_init();
     LOG_INFO("<---------------------  time used  ---------------------------->");
 #if 1
     clock_t start,stop;
@@ -37,8 +39,8 @@ int main() {
     LOG_INFO_IF(k++ < 4, "this tells: k>5? k=%d", k);
 
 
-    catlog_deinit(NULL);
-    printf("%d\n",catlog_push_out_cnts);
+    catlog_deinit();
+    printf("output counts:%d\n",catlog_push_out_cnts);
 
     return 0;
 }
