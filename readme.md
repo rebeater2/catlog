@@ -4,7 +4,7 @@
 1. Cached output;
 2. Basic log functions are provided: log level, ANSI, multi-thread,log every , log first
 and log if ;
-3. Linux/Windows/Mac/RTOS and STM32 are supported;
+3. Linux/Windows/RTOS and STM32 are supported;
 4. You can define what to do when buffer is overflowed;
 
 ### Usage
@@ -63,5 +63,10 @@ This macro configures whether to add function names to log messages
 5. `CATLOG_BUFFER_SIZE`
 This macro configures the size of the buffer in byte 
 
-#### Bugs
-1. `\0` will show at the beginning of some lines unexpectedly
+#### Test on
+- [x] windows (msys2 mingw)
+- [x] linux (gcc-11)
+- [ ] rtos (gcc-arm-none-eabi)
+
+#### TODO (or never do)
+1. Support MSVC multi-thread
