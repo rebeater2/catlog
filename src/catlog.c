@@ -48,14 +48,14 @@ void catlog_push_out() {
     catlog_push_out_cnts++;
 }
 
-void catlog_init(catlog_config_t *config) {
+void catlog_init() {
 #if CATLOG_PUSHOUT_LEVEL != CATLOG_DISABLE
     catlog_buffer = malloc(sizeof(char) * CATLOG_BUFFER_SIZE);
     catlog_offset = 0;
 #if CATLOG_OUTPUT_MODE == CATLOG_OUTPUT_TO_STDERR
     catlog_open_stderr(NULL);
 #elif  CATLOG_OUTPUT_MODE == CATLOG_OUTPUT_TO_FILE
-    const char filename[25];
+    char filename[25];
     time_t cur = time(NULL);
     struct tm *t = localtime(&cur);
     sprintf(filename,"%04d%02d%02d_%02d%02d%02d.log",
@@ -123,12 +123,12 @@ static uint32_t add_end_mark(catlog_level_t level) {
 
 static uint32_t add_endline() {
 #ifndef WIN32
-    catlog_buffer[catlog_offset] = '\n';
-    catlog_offset += 1;
-#else
     catlog_buffer[catlog_offset] = '\r';
     catlog_buffer[catlog_offset+1] = '\n';
     catlog_offset += 2;
+#else
+    catlog_buffer[catlog_offset] = '\n';
+    catlog_offset += 1;
 #endif
     return 0;
 }
@@ -181,7 +181,7 @@ void log_impl(catlog_level_t level, const char *func_name, const char *fmt, ...)
 #endif
 }
 
-void catlog_deinit(catlog_config_t *config) {
+void catlog_deinit() {
 #if CATLOG_PUSHOUT_LEVEL != CATLOG_DISABLE
     if (catlog_offset > 0) {
         catlog_push_out();

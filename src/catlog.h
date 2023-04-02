@@ -35,17 +35,8 @@ typedef uint8_t catlog_level_t;
 #define CATLOG_OUTPUT_TO_DEVICE  2
 
 
-typedef struct {
-  uint8_t anis_support;
-  uint8_t cached_output;
-  uint8_t add_function_name;
 
-  uint32_t buffer_size;
-  uint8_t *buffer;
-  char filename[25];
-} catlog_config_t;
-
-void catlog_init(catlog_config_t *);
+void catlog_init();
 void log_impl(catlog_level_t level,const char *func_name, const char *fmt, ...);
 
 #if CATLOG_PUSHOUT_LEVEL > (CATLOG_INFO)
@@ -240,7 +231,7 @@ do{                                           \
 
 
 
-void catlog_deinit(catlog_config_t *);
+void catlog_deinit();
 
 extern uint32_t catlog_push_out_cnts;
 
