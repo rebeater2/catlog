@@ -1,11 +1,11 @@
 # CatLog: a light and basic log system
 
 ### Features
-1. Cached output;
-2. Basic log functions are provided: log level, ANSI, multi-thread,log every , log first
-and log if ;
-3. Linux/Windows/RTOS and STM32 are supported;
-4. You can define what to do when buffer is overflowed;
+1. *Cached output*;
+2. *Basic log functions are provided: **log level**, **ANSI**, **multi-thread**,
+**log every** , **log first** and **log if*** ;
+3. *Linux/Windows/RTOS and STM32 are supported*;
+4. *You can define what to do when buffer is overflowed*;
 
 ### Usage
 #### 1. Basic log APIs
@@ -63,10 +63,24 @@ This macro configures whether to add function names to log messages
 5. `CATLOG_BUFFER_SIZE`
 This macro configures the size of the buffer in byte 
 
-#### Test on
+#### Tested on
 - [x] windows (msys2 mingw)
 - [x] linux (gcc-11)
 - [ ] rtos (gcc-arm-none-eabi)
+
+speed test:
+platform: WSL on Windows 11     
+CPU: R9 7950X, 16C32T    
+RAM: 15G(for WSL)   
+output to stdout for 100000 times   
+
+| buffers size |output counts| time usage |
+|--------------| ----- |------------|
+| printf       |100000| 179ms      |
+| closed       |100000| 435ms      |
+| 512bytes     |25000| 251ms      |
+| 1kbytes      |8333| 156ms      |
+| 1Mbytes      |3| 117ms      |
 
 #### TODO (or never do)
 1. Support MSVC multi-thread
