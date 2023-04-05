@@ -17,8 +17,8 @@ int main() {
 #if 1
     clock_t start,stop;
     start = clock();
-    for(int i = 0; i < 10000; ++i){
-        LOG_INFO("this is %d,%s",i,"hello world");
+    for(int i = 0; i < 100000; ++i){
+        LOG_INFO("this is %d,%f,%s",i,3.14159,"hello world");
     }
     stop = clock();
     LOG_INFO("MAX push out cnts %d",catlog_push_out_cnts);
@@ -26,12 +26,12 @@ int main() {
 #endif
     LOG_INFO("<---------------------  base function test  ---------------------------->");
     LOG_INFO("this is INFO message: %d", 1);
-    LOG_DEBUG("this is DEBUG message: %f %.2f", 1.0,2.12);
-    LOG_WARNING("this is WARNING message: %d", 2);
+    LOG_DEBUG("this is DEBUG message: %f %.4f", 1.0,2.14231423);
+    LOG_WARNING("this is WARNING message: %f", 2);
     LOG_ERROR("this is ERROR message: 0x%x", 0xff);
     LOG_FETAL("this is FETAL message: %d %d", 2, 4);
 
-    for (int i = 0; i <= 2000; i++) {
+    for (int i = 0; i <= 20; i++) {
         LOG_INFO_EVERY(5, "this will log info every 5 times(current i = %d)", i);
         LOG_DEBUG_FIRST(3, "this will log debug only the first 3 times(current i = %d)", i);
     }

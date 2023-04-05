@@ -7,13 +7,18 @@
 **/
 
 
-#include <stdarg.h>
-#include <malloc.h>
-#include <stdio.h>
 #include "catlog.h"
 #include "catlog_port.h"
 
-#include <time.h>
+#include <stdarg.h>
+#include <malloc.h>
+#include <stdio.h>
+#if CATLOG_USE_XPRITF == 0
+#define catlog_sprintf sprintf
+#else
+#include "xprintf.h"
+#define catlog_sprintf xsprintf
+#endif
 
 static uint8_t *catlog_buffer = NULL;
 static uint32_t catlog_offset = 0;

@@ -39,7 +39,7 @@ void *thread_func(void *i) {
 }
 
 int main() {
-    catlog_init(NULL);
+    catlog_init();
 
     const int th_n = 32;
     int th_num[th_n];
@@ -54,5 +54,5 @@ int main() {
         pthread_join(th[i], NULL);
     }
     LOG_INFO("output counts:%d",catlog_push_out_cnts);
-    catlog_deinit(NULL);
+    catlog_deinit();
 }
